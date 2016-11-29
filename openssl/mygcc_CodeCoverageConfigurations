@@ -1,0 +1,63 @@
+#!/bin/bash
+
+ABSPATH=$(cd "$(dirname "$0")"; pwd)
+echo ""
+echo ""
+echo "-=== ALL PARAMS ===-"
+echo $@
+echo ""
+echo ""
+echo "-=== FILTERED PARAMS ===-"
+FILTEREDPARAMS=`$ABSPATH/filterargs $@`
+FNAME=`$ABSPATH/filtername $@ | tr -d ' '`
+
+FNAME=`pwd`/$FNAME
+FNAMEORG=$FNAME
+
+#ABSPATH=$(echo $ABSPATH | sed s/scratch/local/g)
+
+#FILTEREDPARAMS=$(echo $FILTEREDPARAMS | sed s/scratch/local/g)
+#FNAME=$(echo $FNAME | sed s/scratch/local/g)
+
+echo $FILTEREDPARAMS
+echo filename "$FNAMEORG"
+
+echo ""
+echo ""
+/usr/bin/gcc $@
+
+# set output files
+outBase="$(dirname $FNAME)/$(basename $FNAME .c)"
+outDbg="$outBase.dbg"
+outPartialPreproc="$outBase.pi"
+outErr="$outBase.err"
+outTime="$outBase.time"
+
+# base parameters
+baseParam="
+	--bdd --dimacsFeaturePrefix \"\" --no-warnings \
+	-I $ABSPATH/../../TypeChef-GNUCHeader/x86_64-linux-gnu/4.8/include-fixed \
+	-I $ABSPATH/../../TypeChef-GNUCHeader/x86_64-linux-gnu/4.8/include \
+	-I $ABSPATH/../../TypeChef-GNUCHeader/usr_include/x86_64-linux-gnu \
+	-I $ABSPATH/../../TypeChef-GNUCHeader/usr_include \
+	--platfromHeader    $ABSPATH/platform.h \
+	--openFeat          $ABSPATH/openfeatures.txt \
+	--featureModelDimacs $ABSPATH/OpenSSL.dimacs \
+	--include $ABSPATH/partial_configuration.h \
+	--serializeAST  \
+        --parserstatistics --lexNoStdout \
+	$FILTEREDPARAMS "
+
+# run typechef only in case we have a c file
+if [[ -f $FNAMEORG ]];
+then
+
+	echo "Starting TypeChef"
+	echo "$baseParam"
+	echo "$FNAME"
+#	sbatch -p chimaira  -A spl -n 1 -c 2  --time=06:00:00  --mem_bind=local --output=/dev/null --error=/dev/null  /scratch/janker/TypeChef/typechef.sh $FNAME $baseParam
+        ./generateCodeCoverageConfigurations_run.sh  $FNAME $baseParam
+fi
+
+echo "Finished"
+echo ""
