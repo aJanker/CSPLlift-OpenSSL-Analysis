@@ -55,8 +55,9 @@ then
 	echo "Starting TypeChef"
 	echo "$baseParam"
 	echo "$FNAME"
+	path=$(pwd)
 #	sbatch -p chimaira  -A spl -n 1 -c 2  --time=06:00:00  --mem_bind=local --output=/dev/null --error=/dev/null  /scratch/janker/TypeChef/typechef.sh $FNAME $baseParam
-        sbatch -p chimaira  -A spl -n 1 -c 2  --time=00:30:00  --mem_bind=local --output=/dev/null --error=/dev/null $ABSPATH/generateCodeCoverageConfigurations_run.sh  $FNAME $baseParam
+        sbatch -p chimaira  -A spl -n 1 -c 2  --time=00:30:00  --mem_bind=local --output=/dev/null --error=/dev/null $ABSPATH/generateCodeCoverageConfigurations_run_slurm.sh $path $FNAME $baseParam
 fi
 
 echo "Finished"
