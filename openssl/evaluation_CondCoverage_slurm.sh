@@ -11,8 +11,8 @@ flags="$PATH/../../TypeChef-Sampling-OpenSSL/openssl/minimalAES.c \
 -I $PATH/../../TypeChef-GNUCHeader/x86_64-linux-gnu \
 --openFeat $PATH/../../TypeChef-GNUCHeader/openfeatures.txt \
 -I $PATH/../../TypeChef-Sampling-OpenSSL/openssl/include \
---spllift taint --spllift evalcoverage --spllift evalsingle --spllift callgraph --spllift printvariants \
+--spllift taint  --spllift evalsingle --spllift callgraph --spllift printvariants \
 --recordTiming --lexNoStdout \
 --linkingInterface $PATH/../../TypeChef-Sampling-OpenSSL/openssl/CModuleInterface.interface"
 
-sbatch -p chimaira  -A spl -n 1 -c 4 --mem=15360 --time=24:00:00  --mem_bind=local --output=/dev/null --error=/dev/null $PATH/../../CSPLlift/lift.sh $flags
+sbatch -p chimaira  -A spl -n 1 -c 4 --mem=15360 --time=24:00:00  --mem_bind=local --output=$PATH/condLog --error=$PATH/condErrLog $PATH/../../CSPLlift/lift.sh $flags
