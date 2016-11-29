@@ -1,9 +1,11 @@
 #!/bin/bash
-#SBATCH -D /scratch/janker/Masterarbeit/CSPLlift-OpenSSL-Analysis
+#SBATCH -D /scratch/janker/Masterarbeit/CSPLlift-OpenSSL-Analysis/openssl
 #SBATCH --job-name=openssl__code
+#SBATCH --output=/dev/null
+#SBATCH --error=/dev/null
 #SBATCH --get-user-env
 
-path=$(cd "$(dirname "$0")"; pwd)
+path=$(pwd)  
 
-$path/../../TypeChef/typechef.sh $@
+$path/../../TypeChef/typechef.sh $@ > /scratch/janker/Masterarbeit/CSPLlift-OpenSSL-Analysis/openssl/logfile
 $path/../../CSPLlift/lift.sh $1 --reuseAST --genCodeCovConfigs
