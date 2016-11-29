@@ -8,7 +8,8 @@
 *.vaareport
 *.ser
 *.tunit_plain
-*.gitignore
+*.config
+
 
 .DS_Store
 .AppleDouble
