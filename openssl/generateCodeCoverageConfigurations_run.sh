@@ -5,5 +5,5 @@
 
 path=$(pwd)
 
-$pathi/../../TypeChef/typechef.sh $@
-$pathi/../../CSPLlift/lift.sh $1 --reuseAST --genCodeCovConfigs
+$path/../../TypeChef/typechef.sh $@
+$path/../../CSPLlift/lift.sh $1 --reuseAST --genCodeCovConfigs
