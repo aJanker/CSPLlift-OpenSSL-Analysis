@@ -8,4 +8,3 @@ find . -name \*.gz -delete
 find . -name \*.pi -delete
 find . -name \*.ast -delete
 find . -name \*.interface -delete
-find . -name \*.config -delete
