@@ -24,12 +24,12 @@ Generate global linking map:
     ./generateASTs.sh
     ./generateLinkingInterface.sh
     
-For the affected-product coverage analysis:
+To run the affected-product coverage analysis:
 
     cd openssl
     ./evaluation_CondCoverage.sh
     
-For the code coverage analysis:
+To run the code coverage analysis:
     
     cd openssl
     ./evaluation_CodeCoverage.sh
