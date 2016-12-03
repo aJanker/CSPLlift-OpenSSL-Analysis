@@ -1,6 +1,6 @@
-# TypeChef Analysis of OpenSSL
+# IFDS Analysis of OpenSSL
 
-Contains various scripts to run static analysis and sampling strategies with TypeChef on OpenSSL.
+Contains various scripts to run static IFDS data-flow analysis and sampling strategies with [CSPLlift](https://github.com/aJanker/CSPLlift) on OpenSSL.
 
 The setup requires multiple steps. Contact me if there are any issues.
 
@@ -11,19 +11,25 @@ In case your operating system does not offer the requiered C system headers, you
 
 ## How to run the analysis
 
-To run the analysis on OpenSSL we have to manipulate the makefile: 
+To run the analysis on OpenSSL we have to perform to follow steps exactly in the described order:
 
-For the variability-aware analysis:
-
-    cd openssl
-    ./config
-    sed -i.bak s+^CC=.*+"CC= $(pwd)/mygcc"+g Makefile
-    make
-    
-    
-For the sampling analysis:
+Extract configurations for code-coverage sampling (optional):
 
     cd openssl
-    ./config
-    sed -i.bak s+^CC=.*+"CC= $(pwd)/mygcc_sampling"+g Makefile
-    make
+    ./generateCodeCoverageConfigurations.sh
+    
+Generate global linking map:
+
+    cd openssl
+    ./generateASTs.sh
+    ./generateLinkingInterface.sh
+    
+For the affected-product coverage analysis:
+
+    cd openssl
+    ./evaluation_CondCoverage.sh
+    
+For the code coverage analysis:
+    
+    cd openssl
+    ./evaluation_CodeCoverage.sh
